@@ -15,7 +15,7 @@ const Footer = () => {
               </h3>
             </div>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Your ultimate destination for all things girly and fabulous! ✨ From sparkly accessories to cute essentials, we've got everything to make you shine.
+              Your ultimate destination for all things girly and fabulous! ✨ From comfy sleepwear to cute essentials, we've got everything to make you shine.
             </p>
             <div className="flex items-center space-x-3">
               <span className="text-xs text-gray-500">Follow us:</span>
