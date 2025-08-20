@@ -45,8 +45,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </Link>
 
-      <CardContent className="p-4 flex-1 flex flex-col justify-between">
-        <div className="space-y-3">
+      <CardContent className="p-2 flex-1 flex flex-col justify-between">
+        <div className="space-y-2">
           <Badge variant="secondary" className="text-xs w-fit">
             {product.category}
           </Badge>
@@ -57,9 +57,10 @@ export default function ProductCard({ product }: ProductCardProps) {
             </h3>
           </Link>
 
-          <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+          <p className="text-sm text-muted-foreground truncate leading-relaxed">
             {product.description}
           </p>
+
 
           <div className="space-y-1">
             <span className="text-xl font-bold text-primary block">
@@ -74,7 +75,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <Button
           onClick={handleAddToCart}
           disabled={isLoading || product.stock_quantity === 0}
-          className="w-full mt-4 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 h-10 font-medium"
+          className="w-full  bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 h-10 font-medium"
         >
           {isLoading ? (
             <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
