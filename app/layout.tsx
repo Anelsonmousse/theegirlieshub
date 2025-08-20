@@ -6,6 +6,7 @@ import "./globals.css"
 import { CartProvider } from "@/lib/cart-context"
 import { AdminProvider } from "@/lib/admin-context"
 import WhatsAppSupport from "@/components/whatsapp-support"
+import Footer from "@/components/footer"
 
 export const metadata: Metadata = {
   title: "Thee Girlies Hub - Your Ultimate Girly Shopping Destination",
@@ -33,7 +34,12 @@ html {
       <body>
         <AdminProvider>
           <CartProvider>
-            {children}
+            <div className="min-h-screen flex flex-col">
+              <main className="flex-1">
+                {children}
+              </main>
+              <Footer />
+            </div>
             <WhatsAppSupport />
           </CartProvider>
         </AdminProvider>
