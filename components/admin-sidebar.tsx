@@ -9,9 +9,7 @@ import {
   LayoutDashboard,
   Package,
   ShoppingCart,
-  Users,
   BarChart3,
-  Settings,
   Plus,
   ChevronLeft,
   ChevronRight,
@@ -34,19 +32,9 @@ const sidebarItems = [
     icon: ShoppingCart,
   },
   {
-    title: "Customers",
-    href: "/admin/customers",
-    icon: Users,
-  },
-  {
     title: "Analytics",
     href: "/admin/analytics",
     icon: BarChart3,
-  },
-  {
-    title: "Settings",
-    href: "/admin/settings",
-    icon: Settings,
   },
 ]
 

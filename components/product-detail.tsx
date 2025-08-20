@@ -242,31 +242,6 @@ export default function ProductDetail({ product, relatedProducts }: ProductDetai
           </div>
 
           <Separator />
-
-          {/* Features */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="flex items-center space-x-3 p-3 bg-muted/50 rounded-lg">
-              <Truck className="h-5 w-5 text-primary" />
-              <div className="text-sm">
-                <p className="font-medium">Free Shipping</p>
-                <p className="text-muted-foreground">On orders over ₦20,000</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-3 p-3 bg-muted/50 rounded-lg">
-              <RotateCcw className="h-5 w-5 text-primary" />
-              <div className="text-sm">
-                <p className="font-medium">30-Day Returns</p>
-                <p className="text-muted-foreground">Easy returns</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-3 p-3 bg-muted/50 rounded-lg">
-              <Shield className="h-5 w-5 text-primary" />
-              <div className="text-sm">
-                <p className="font-medium">Secure Payment</p>
-                <p className="text-muted-foreground">SSL protected</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -284,13 +259,13 @@ export default function ProductDetail({ product, relatedProducts }: ProductDetai
               <div className="prose prose-sm max-w-none">
                 <h3 className="text-lg font-semibold mb-3">Product Details</h3>
                 <p className="text-muted-foreground leading-relaxed">{product.description}</p>
-                <ul className="space-y-2 text-muted-foreground">
+                {/* <ul className="space-y-2 text-muted-foreground">
                   <li>• High-quality materials for long-lasting use</li>
                   <li>• Perfect for everyday wear or special occasions</li>
                   <li>• Designed with love for the girly aesthetic</li>
                   <li>• Carefully crafted attention to detail</li>
                   <li>• Suitable for gifting to your favorite girly girl</li>
-                </ul>
+                </ul> */}
               </div>
             </TabsContent>
 
