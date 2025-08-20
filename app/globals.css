@@ -1,0 +1,160 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Updated color scheme for girly ecommerce theme */
+  --background: #fcdaf2;
+  --foreground: #2d1b2e;
+  --card: #ffffff;
+  --card-foreground: #2d1b2e;
+  --popover: #ffffff;
+  --popover-foreground: #2d1b2e;
+  --primary: #a81d19;
+  --primary-foreground: #ffffff;
+  --secondary: #f8e8f5;
+  --secondary-foreground: #2d1b2e;
+  --muted: #f0d0e8;
+  --muted-foreground: #6b4c6d;
+  --accent: #e91e63;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #e5b8d8;
+  --input: #e5b8d8;
+  --ring: #a81d19;
+  --chart-1: #e91e63;
+  --chart-2: #f06292;
+  --chart-3: #ba68c8;
+  --chart-4: #ff8a65;
+  --chart-5: #ffb74d;
+  --radius: 0.75rem;
+  --sidebar: #f8e8f5;
+  --sidebar-foreground: #2d1b2e;
+  --sidebar-primary: #a81d19;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f0d0e8;
+  --sidebar-accent-foreground: #2d1b2e;
+  --sidebar-border: #e5b8d8;
+  --sidebar-ring: #a81d19;
+}
+
+.dark {
+  --background: #1a0e1a;
+  --foreground: #f8e8f5;
+  --card: #2d1b2e;
+  --card-foreground: #f8e8f5;
+  --popover: #2d1b2e;
+  --popover-foreground: #f8e8f5;
+  --primary: #e91e63;
+  --primary-foreground: #ffffff;
+  --secondary: #3d2b3e;
+  --secondary-foreground: #f8e8f5;
+  --muted: #3d2b3e;
+  --muted-foreground: #b8a0b8;
+  --accent: #f06292;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #4d3b4e;
+  --input: #4d3b4e;
+  --ring: #e91e63;
+  --chart-1: #e91e63;
+  --chart-2: #f06292;
+  --chart-3: #ba68c8;
+  --chart-4: #ff8a65;
+  --chart-5: #ffb74d;
+  --sidebar: #2d1b2e;
+  --sidebar-foreground: #f8e8f5;
+  --sidebar-primary: #e91e63;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #3d2b3e;
+  --sidebar-accent-foreground: #f8e8f5;
+  --sidebar-border: #4d3b4e;
+  --sidebar-ring: #e91e63;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Added custom girly styling */
+.girly-gradient {
+  background: linear-gradient(135deg, #fcdaf2 0%, #f8e8f5 100%);
+}
+
+.sparkle-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.sparkle-effect::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: sparkle 2s infinite;
+}
+
+@keyframes sparkle {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.futuristic-border {
+  border: 2px solid transparent;
+  background: linear-gradient(var(--background), var(--background)) padding-box,
+    linear-gradient(45deg, #a81d19, #e91e63, #f06292) border-box;
+}
