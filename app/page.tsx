@@ -56,7 +56,7 @@ export default async function HomePage() {
               Our Products
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Discover our amazing collection of girly essentials and trending items!
+              Shop our amazing collection of our girlies essentials items!!
             </p>
           </div>
 

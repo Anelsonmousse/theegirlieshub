@@ -6,7 +6,8 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Search, Package, Eye } from "lucide-react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Search, Package, Eye, X, User, Mail, MapPin, Calendar, ShoppingCart } from "lucide-react"
 import { formatCurrency } from "@/lib/utils"
 import { createClient } from "@supabase/supabase-js"
 
@@ -14,6 +15,7 @@ interface Order {
   id: string
   customer_name: string
   customer_email: string
+  customer_address: string
   total_amount: number
   status: string
   created_at: string
@@ -29,6 +31,8 @@ export default function AdminOrdersPage() {
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     fetchOrders()
@@ -148,6 +152,11 @@ export default function AdminOrdersPage() {
     }
   }
 
+  const handleViewOrder = (order: Order) => {
+    setSelectedOrder(order)
+    setIsModalOpen(true)
+  }
+
   const filteredOrders = orders.filter((order) => {
     const matchesSearch =
       order.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -166,13 +175,13 @@ export default function AdminOrdersPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-4 md:p-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             Orders Management
           </h1>
-          <p className="text-muted-foreground">Manage customer orders and track fulfillment</p>
+          <p className="text-sm md:text-base text-muted-foreground">Manage customer orders and track fulfillment</p>
         </div>
         <Badge variant="secondary" className="bg-primary/10 text-primary">
           {filteredOrders.length} Orders
@@ -217,61 +226,216 @@ export default function AdminOrdersPage() {
               </p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Order ID</TableHead>
-                    <TableHead>Customer</TableHead>
-                    <TableHead>Items</TableHead>
-                    <TableHead>Total</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredOrders.map((order) => (
-                    <TableRow key={order.id}>
-                      <TableCell className="font-mono text-sm">#{order.id.slice(-8)}</TableCell>
-                      <TableCell>
+            <>
+              {/* Desktop Table View */}
+              <div className="hidden md:block overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Order ID</TableHead>
+                      <TableHead>Customer</TableHead>
+                      <TableHead>Items</TableHead>
+                      <TableHead>Total</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredOrders.map((order) => (
+                      <TableRow key={order.id} className="cursor-pointer hover:bg-muted/50" onClick={() => handleViewOrder(order)}>
+                        <TableCell className="font-mono text-sm">#{order.id.slice(-8)}</TableCell>
+                        <TableCell>
+                          <div>
+                            <div className="font-medium">{order.customer_name}</div>
+                            <div className="text-sm text-muted-foreground">{order.customer_email}</div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm">
+                            {order.items.slice(0, 2).map((item, index) => (
+                              <div key={index}>
+                                {item.quantity}x {item.product_name}
+                              </div>
+                            ))}
+                            {order.items.length > 2 && (
+                              <div className="text-muted-foreground">+{order.items.length - 2} more items</div>
+                            )}
+                          </div>
+                        </TableCell>
+                        <TableCell className="font-medium">{formatCurrency(order.total_amount)}</TableCell>
+                        <TableCell>
+                          <Badge className={getStatusColor(order.status)}>{order.status}</Badge>
+                        </TableCell>
+                        <TableCell className="text-sm text-muted-foreground">
+                          {new Date(order.created_at).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell>
+                          <Button variant="ghost" size="sm" onClick={(e) => {
+                            e.stopPropagation()
+                            handleViewOrder(order)
+                          }}>
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+
+              {/* Mobile Card View */}
+              <div className="md:hidden space-y-4">
+                {filteredOrders.map((order) => (
+                  <Card key={order.id} className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => handleViewOrder(order)}>
+                    <CardContent className="p-4">
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="font-mono text-sm font-medium">#{order.id.slice(-8)}</span>
+                          <Badge className={getStatusColor(order.status)}>{order.status}</Badge>
+                        </div>
+                        
                         <div>
                           <div className="font-medium">{order.customer_name}</div>
                           <div className="text-sm text-muted-foreground">{order.customer_email}</div>
                         </div>
-                      </TableCell>
-                      <TableCell>
+
                         <div className="text-sm">
-                          {order.items.slice(0, 2).map((item, index) => (
-                            <div key={index}>
-                              {item.quantity}x {item.product_name}
-                            </div>
-                          ))}
-                          {order.items.length > 2 && (
-                            <div className="text-muted-foreground">+{order.items.length - 2} more items</div>
-                          )}
+                          <div className="font-medium text-primary">{formatCurrency(order.total_amount)}</div>
+                          <div className="text-muted-foreground">
+                            {order.items.length} item{order.items.length !== 1 ? 's' : ''}
+                          </div>
                         </div>
-                      </TableCell>
-                      <TableCell className="font-medium">{formatCurrency(order.total_amount)}</TableCell>
-                      <TableCell>
-                        <Badge className={getStatusColor(order.status)}>{order.status}</Badge>
-                      </TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
-                        {new Date(order.created_at).toLocaleDateString()}
-                      </TableCell>
-                      <TableCell>
-                        <Button variant="ghost" size="sm">
+
+                        <div className="flex items-center justify-between text-sm text-muted-foreground">
+                          <span>{new Date(order.created_at).toLocaleDateString()}</span>
                           <Eye className="h-4 w-4" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </>
           )}
         </CardContent>
       </Card>
+
+      {/* Order Details Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-between">
+              <span>Order Details</span>
+              <Button variant="ghost" size="sm" onClick={() => setIsModalOpen(false)}>
+                <X className="h-4 w-4" />
+              </Button>
+            </DialogTitle>
+          </DialogHeader>
+          
+          {selectedOrder && (
+            <div className="space-y-6">
+              {/* Order Summary */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Card>
+                  <CardContent className="p-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Package className="h-4 w-4 text-primary" />
+                        <span className="font-medium">Order Information</span>
+                      </div>
+                      <div className="space-y-2">
+                        <div>
+                          <span className="text-sm text-muted-foreground">Order ID</span>
+                          <div className="font-mono">#{selectedOrder.id}</div>
+                        </div>
+                        <div>
+                          <span className="text-sm text-muted-foreground">Status</span>
+                          <div>
+                            <Badge className={getStatusColor(selectedOrder.status)}>
+                              {selectedOrder.status}
+                            </Badge>
+                          </div>
+                        </div>
+                        <div>
+                          <span className="text-sm text-muted-foreground">Order Date</span>
+                          <div>{new Date(selectedOrder.created_at).toLocaleString()}</div>
+                        </div>
+                        <div>
+                          <span className="text-sm text-muted-foreground">Total Amount</span>
+                          <div className="text-lg font-bold text-primary">
+                            {formatCurrency(selectedOrder.total_amount)}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardContent className="p-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <User className="h-4 w-4 text-primary" />
+                        <span className="font-medium">Customer Information</span>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <User className="h-3 w-3 text-muted-foreground" />
+                          <span>{selectedOrder.customer_name}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Mail className="h-3 w-3 text-muted-foreground" />
+                          <span className="text-sm">{selectedOrder.customer_email}</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <MapPin className="h-3 w-3 text-muted-foreground mt-1" />
+                          <span className="text-sm">{selectedOrder.customer_address}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Order Items */}
+              <Card>
+                <CardContent className="p-4">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <ShoppingCart className="h-4 w-4 text-primary" />
+                      <span className="font-medium">Order Items ({selectedOrder.items.length})</span>
+                    </div>
+                    
+                    <div className="space-y-3">
+                      {selectedOrder.items.map((item, index) => (
+                        <div key={index} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                          <div className="flex-1">
+                            <div className="font-medium">{item.product_name}</div>
+                            <div className="text-sm text-muted-foreground">
+                              Quantity: {item.quantity} × {formatCurrency(item.price)}
+                            </div>
+                          </div>
+                          <div className="font-medium">
+                            {formatCurrency(item.quantity * item.price)}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="border-t pt-3">
+                      <div className="flex items-center justify-between text-lg font-bold">
+                        <span>Total</span>
+                        <span className="text-primary">{formatCurrency(selectedOrder.total_amount)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
