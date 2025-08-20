@@ -34,7 +34,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       )}
 
       <Link href={`/products/${product.id}`} className="block">
-        <div className="aspect-square overflow-hidden">
+        <div className="aspect-square overflow-hidden -mt-[15px]">
           <Image
             src={product.image_url || "/placeholder.svg?height=300&width=300&query=girly product"}
             alt={product.name}
@@ -45,9 +45,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </Link>
 
-      <CardContent className="p-2 flex-1 flex flex-col justify-between">
+      <CardContent className="p-2 flex-1 flex flex-col justify-between -mt-[20px]">
         <div className="space-y-2">
-          <Badge variant="secondary" className="text-xs w-fit">
+          <Badge variant="secondary" className="text-[10px] w-fit">
             {product.category}
           </Badge>
 
