@@ -34,8 +34,8 @@ export default function HeroSection() {
               </span>
             </h1>
 
-            <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto">
-              Discover the cutest, comfiest , and most adorable items provided just for you. From thee.girlies.hub - we've got essential for every girlies journey🎀🍒
+            <p className="text-xl sm:text-xl text-muted-foreground max-w-3xl mx-auto">
+              Your favorite hub for everything girly,comfy,sexy and adorable items 🎀
             </p>
           </div>
 
