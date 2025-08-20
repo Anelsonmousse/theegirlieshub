@@ -303,31 +303,6 @@ export default function ProductDetail({ product, relatedProducts }: ProductDetai
                 ))}
               </div>
             </TabsContent>
-
-            <TabsContent value="shipping" className="mt-6 space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">Shipping Information</h3>
-                  <ul className="space-y-2 text-muted-foreground">
-                    <li>• Free standard shipping on orders over ₦20,000</li>
-                    <li>• Standard delivery: 3-5 business days</li>
-                    <li>• Express delivery: 1-2 business days ($9.99)</li>
-                    <li>• International shipping available</li>
-                    <li>• Tracking information provided via email</li>
-                  </ul>
-                </div>
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">Returns & Exchanges</h3>
-                  <ul className="space-y-2 text-muted-foreground">
-                    <li>• 30-day return policy</li>
-                    <li>• Items must be in original condition</li>
-                    <li>• Free return shipping for defective items</li>
-                    <li>• Easy online return process</li>
-                    <li>• Refunds processed within 5-7 business days</li>
-                  </ul>
-                </div>
-              </div>
-            </TabsContent>
           </Tabs>
         </CardContent>
       </Card>
