@@ -159,7 +159,7 @@ export default function OrderConfirmation({ order }: OrderConfirmationProps) {
           <div className="flex items-center justify-center space-x-8 text-sm text-muted-foreground">
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-              <span>Follow @thegirlieshub</span>
+              <span>Follow @thee.girlies.hub0</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-accent rounded-full animate-pulse delay-500" />

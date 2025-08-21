@@ -281,19 +281,25 @@ export default function CheckoutForm() {
                   <SelectTrigger className="futuristic-border h-auto">
                     <SelectValue placeholder="Select your delivery location" />
                   </SelectTrigger>
-                  <SelectContent className="w-full">
+                  <SelectContent className="w-full max-w-[95vw]">
                     {shippingOptions.map((option) => (
-                      <SelectItem key={option.id} value={option.id} className="p-4 hover:bg-muted cursor-pointer">
-                        <div className="w-full">
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="font-semibold text-base">{option.name}</span>
-                            <span className="text-primary font-bold text-lg">
+                      <SelectItem 
+                        key={option.id} 
+                        value={option.id} 
+                        className="p-3 hover:bg-muted cursor-pointer data-[highlighted]:bg-primary/10 data-[highlighted]:text-foreground"
+                      >
+                        <div className="w-full min-w-0">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
+                            <span className="font-semibold text-sm sm:text-base">{option.name}</span>
+                            <span className="text-primary font-bold text-base sm:text-lg">
                               {option.fee === 0 ? "FREE" : `₦${option.fee.toLocaleString()}`}
                             </span>
                           </div>
-                          <p className="text-sm text-muted-foreground leading-relaxed mb-2">{option.description}</p>
+                          <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-2 break-words">
+                            {option.description}
+                          </p>
                           <div className="flex items-center text-xs text-muted-foreground">
-                            <Clock className="h-3 w-3 mr-1" />
+                            <Clock className="h-3 w-3 mr-1 flex-shrink-0" />
                             <span>Delivery: {option.deliveryTime}</span>
                           </div>
                         </div>
@@ -305,19 +311,19 @@ export default function CheckoutForm() {
 
               {/* Selected shipping details */}
               {selectedShipping && (
-                <div className="p-6 bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-xl space-y-3">
-                  <div className="flex items-center justify-between">
+                <div className="p-4 sm:p-6 bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-xl space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
                         <Truck className="h-5 w-5 text-primary" />
                       </div>
-                      <div>
-                        <h4 className="font-semibold text-lg">{selectedShipping.name}</h4>
-                        <p className="text-sm text-muted-foreground">Selected shipping method</p>
+                      <div className="min-w-0">
+                        <h4 className="font-semibold text-base sm:text-lg">{selectedShipping.name}</h4>
+                        <p className="text-xs sm:text-sm text-muted-foreground">Selected shipping method</p>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <span className="font-bold text-xl text-primary">
+                    <div className="text-left sm:text-right">
+                      <span className="font-bold text-lg sm:text-xl text-primary">
                         {selectedShipping.fee === 0 ? "FREE" : `₦${selectedShipping.fee.toLocaleString()}`}
                       </span>
                       <p className="text-xs text-muted-foreground">Shipping fee</p>
@@ -325,9 +331,11 @@ export default function CheckoutForm() {
                   </div>
                   
                   <div className="border-t border-primary/10 pt-3">
-                    <p className="text-sm text-muted-foreground mb-2">{selectedShipping.description}</p>
-                    <div className="flex items-center space-x-2 text-sm font-medium">
-                      <Clock className="h-4 w-4 text-primary" />
+                    <p className="text-xs sm:text-sm text-muted-foreground mb-2 break-words leading-relaxed">
+                      {selectedShipping.description}
+                    </p>
+                    <div className="flex items-center space-x-2 text-xs sm:text-sm font-medium">
+                      <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-primary flex-shrink-0" />
                       <span>Delivery time: {selectedShipping.deliveryTime}</span>
                     </div>
                   </div>
