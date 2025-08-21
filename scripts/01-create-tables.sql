@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS orders (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   customer_email VARCHAR(255) NOT NULL,
   customer_name VARCHAR(255) NOT NULL,
+  customer_phone VARCHAR(20) NOT NULL,
   customer_address TEXT NOT NULL,
   total_amount DECIMAL(10,2) NOT NULL,
   status VARCHAR(50) DEFAULT 'pending',
@@ -58,3 +59,4 @@ CREATE INDEX IF NOT EXISTS idx_products_featured ON products(is_featured);
 CREATE INDEX IF NOT EXISTS idx_cart_items_session ON cart_items(session_id);
 CREATE INDEX IF NOT EXISTS idx_orders_email ON orders(customer_email);
 CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
+CREATE INDEX IF NOT EXISTS idx_orders_phone ON orders(customer_phone);

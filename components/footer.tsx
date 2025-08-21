@@ -49,7 +49,6 @@ const Footer = () => {
               <div className="flex items-start space-x-3">
                 <MapPin className="h-4 w-4 text-pink-500 mt-0.5 flex-shrink-0" />
                 <div className="text-sm text-gray-600">
-                  <p className="font-medium">Visit Our Store</p>
                   <p>Surulere, Lagos, Nigeria</p>
                 </div>
               </div>

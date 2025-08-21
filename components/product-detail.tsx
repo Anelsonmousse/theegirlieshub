@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Heart, ShoppingBag, Star, Plus, Minus, Share2, Truck, Shield, RotateCcw } from "lucide-react"
+import { Heart, ShoppingBag, Plus, Minus, Share2 } from "lucide-react"
 import type { Product } from "@/lib/types"
 import Image from "next/image"
 import Link from "next/link"
@@ -58,36 +58,10 @@ export default function ProductDetail({ product, relatedProducts }: ProductDetai
         console.log("Error sharing:", error)
       }
     } else {
-      // Fallback: copy to clipboard
       navigator.clipboard.writeText(window.location.href)
       alert("Link copied to clipboard!")
     }
   }
-
-  // Mock reviews data
-  const reviews = [
-    {
-      id: 1,
-      name: "Emma S.",
-      rating: 5,
-      comment: "Absolutely love this! So cute and exactly as described. Perfect for my girly aesthetic! 💕",
-      date: "2024-01-15",
-    },
-    {
-      id: 2,
-      name: "Sophie M.",
-      rating: 5,
-      comment: "Amazing quality and super fast shipping! Will definitely order again. Highly recommend! ✨",
-      date: "2024-01-10",
-    },
-    {
-      id: 3,
-      name: "Chloe R.",
-      rating: 4,
-      comment: "Really pretty and good value for money. The color is even more beautiful in person!",
-      date: "2024-01-08",
-    },
-  ]
 
   return (
     <div className="space-y-12">
@@ -162,15 +136,6 @@ export default function ProductDetail({ product, relatedProducts }: ProductDetai
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-bold text-foreground">{product.name}</h1>
-
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-1">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                ))}
-                <span className="text-sm text-muted-foreground ml-2">(4.8) • 127 reviews</span>
-              </div>
-            </div>
 
             <div className="space-y-2">
               <div className="text-3xl font-bold text-primary">₦{product.price.toFixed(2)}</div>
@@ -249,9 +214,8 @@ export default function ProductDetail({ product, relatedProducts }: ProductDetai
       <Card className="futuristic-border">
         <CardContent className="p-6">
           <Tabs defaultValue="description" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="description">Description</TabsTrigger>
-              <TabsTrigger value="reviews">Reviews (127)</TabsTrigger>
               <TabsTrigger value="shipping">Shipping & Returns</TabsTrigger>
             </TabsList>
 
@@ -259,48 +223,6 @@ export default function ProductDetail({ product, relatedProducts }: ProductDetai
               <div className="prose prose-sm max-w-none">
                 <h3 className="text-lg font-semibold mb-3">Product Details</h3>
                 <p className="text-muted-foreground leading-relaxed">{product.description}</p>
-                {/* <ul className="space-y-2 text-muted-foreground">
-                  <li>• High-quality materials for long-lasting use</li>
-                  <li>• Perfect for everyday wear or special occasions</li>
-                  <li>• Designed with love for the girly aesthetic</li>
-                  <li>• Carefully crafted attention to detail</li>
-                  <li>• Suitable for gifting to your favorite girly girl</li>
-                </ul> */}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="reviews" className="mt-6 space-y-6">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">Customer Reviews</h3>
-                <div className="flex items-center space-x-2">
-                  <div className="flex items-center space-x-1">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <span className="text-sm text-muted-foreground">4.8 out of 5</span>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                {reviews.map((review) => (
-                  <div key={review.id} className="border-b pb-4 last:border-b-0">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center space-x-2">
-                        <span className="font-medium">{review.name}</span>
-                        <div className="flex items-center space-x-1">
-                          {Array.from({ length: review.rating }).map((_, i) => (
-                            <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                          ))}
-                        </div>
-                      </div>
-                      <span className="text-sm text-muted-foreground">
-                        {new Date(review.date).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <p className="text-muted-foreground">{review.comment}</p>
-                  </div>
-                ))}
               </div>
             </TabsContent>
 
@@ -311,9 +233,7 @@ export default function ProductDetail({ product, relatedProducts }: ProductDetai
                   <ul className="space-y-2 text-muted-foreground">
                     <li>• Free standard shipping on orders over ₦50,000</li>
                     <li>• Inter State delivery: 3-5 business days</li>
-                    <li>• Lagos delivery: 1-2 business days ($9.99)</li>
-                    <li>• International shipping available</li>
-                    <li>• Tracking information provided via email</li>
+                    <li>• Lagos delivery: 1-2 business days</li>
                   </ul>
                 </div>
                 <div className="space-y-4">

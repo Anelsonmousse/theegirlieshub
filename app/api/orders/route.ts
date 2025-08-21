@@ -1,14 +1,32 @@
 import { createServerClient } from "@/lib/supabase/server"
 import { type NextRequest, NextResponse } from "next/server"
+import { getShippingFee } from "../shipping-options/route"
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { customer_name, customer_email, customer_address, total_amount, items } = body
+    const { 
+      customer_name, 
+      customer_email, 
+      customer_phone, 
+      customer_address, 
+      shipping_location,
+      shipping_fee,
+      total_amount, 
+      items 
+    } = body
 
     // Validate required fields
-    if (!customer_name || !customer_email || !customer_address || !total_amount || !items?.length) {
+    if (!customer_name || !customer_email || !customer_phone || !customer_address || !shipping_location || !total_amount || !items?.length) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+    }
+
+    // Security: Validate shipping fee on backend
+    const validShippingFee = getShippingFee(shipping_location)
+    if (shipping_fee !== validShippingFee) {
+      return NextResponse.json({ 
+        error: "Invalid shipping fee. Please refresh and try again." 
+      }, { status: 400 })
     }
 
     const supabase = createServerClient()
@@ -19,7 +37,10 @@ export async function POST(request: NextRequest) {
       .insert({
         customer_name,
         customer_email,
+        customer_phone,
         customer_address,
+        shipping_location,
+        shipping_fee: validShippingFee, // Use validated fee
         total_amount,
         status: "pending",
       })
