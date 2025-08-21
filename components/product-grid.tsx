@@ -18,7 +18,7 @@ export default function ProductGrid({ initialProducts = [], initialPagination }:
   const [loading, setLoading] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
-  const categories = ["Beauty", "Accessories", "Fashion"]
+  const categories = ["Beauty", "Accessories", "Fashion", "Girly Essentials", "Cup", "Phone Accessories", "Lingering", "Pyjamas", "Mat"]
 
   const fetchProducts = async (page = 1, category?: string) => {
     setLoading(true)

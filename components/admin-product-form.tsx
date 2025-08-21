@@ -38,7 +38,7 @@ export default function ProductForm({ product }: ProductFormProps) {
     designs: product?.designs?.join(", ") || "",
   })
 
-  const categories = ["Beauty", "Accessories", "Fashion"]
+  const categories = ["Beauty", "Accessories", "Fashion", "Girly Essentials", "Cup", "Phone Accessories", "Lingering", "Pyjamas", "Mat"]
 
   const handleInputChange = (field: string, value: string | boolean | string[]) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
