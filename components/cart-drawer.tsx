@@ -68,9 +68,31 @@ export default function CartDrawer() {
 
                     <div className="flex-1 space-y-2">
                       <div className="flex items-start justify-between">
-                        <div>
-                          <h4 className="font-medium text-sm line-clamp-2">{item.product.name}</h4>
-                          <p className="text-sm text-muted-foreground">₦{item.product.price.toFixed(2)}</p>
+                        <div className="flex-1">
+                          <h4 className="font-medium text-sm line-clamp-2 mb-1">{item.product.name}</h4>
+                          
+                          {/* Display selected variants */}
+                          {item.product.selectedVariants && (
+                            <div className="flex flex-wrap gap-1 mb-2">
+                              {item.product.selectedVariants.size && (
+                                <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                                  Size: {item.product.selectedVariants.size}
+                                </span>
+                              )}
+                              {item.product.selectedVariants.color && (
+                                <span className="text-xs bg-accent/10 text-accent px-2 py-1 rounded">
+                                  Color: {item.product.selectedVariants.color}
+                                </span>
+                              )}
+                              {item.product.selectedVariants.design && (
+                                <span className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">
+                                  Design: {item.product.selectedVariants.design}
+                                </span>
+                              )}
+                            </div>
+                          )}
+                          
+                          <p className="text-sm text-muted-foreground">₦{item.product.price.toLocaleString()}</p>
                         </div>
                         <Button
                           variant="ghost"
@@ -105,7 +127,7 @@ export default function CartDrawer() {
                           </Button>
                         </div>
                         <span className="font-semibold text-primary">
-                          ₦{(item.product.price * item.quantity).toFixed(2)}
+                          ₦{(item.product.price * item.quantity).toLocaleString()}
                         </span>
                       </div>
                     </div>
@@ -116,7 +138,7 @@ export default function CartDrawer() {
               <div className="border-t pt-4 space-y-4">
                 <div className="flex items-center justify-between text-lg font-semibold">
                   <span>Total:</span>
-                  <span className="text-primary">₦{state.total.toFixed(2)}</span>
+                  <span className="text-primary">₦{state.total.toLocaleString()}</span>
                 </div>
 
                 <div className="space-y-2">

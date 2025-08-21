@@ -4,7 +4,19 @@ import { type NextRequest, NextResponse } from "next/server"
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, description, price, image_url, category, stock_quantity, is_featured } = body
+    const { 
+      name, 
+      description, 
+      price, 
+      image_url, 
+      image_urls,
+      category, 
+      stock_quantity, 
+      is_featured,
+      sizes,
+      colors,
+      designs
+    } = body
 
     // Validate required fields
     if (!name || !price || !category) {
@@ -13,17 +25,26 @@ export async function POST(request: NextRequest) {
 
     const supabase = createServerClient()
 
+    // Prepare the product data
+    const productData = {
+      name,
+      description,
+      price: Number.parseFloat(price),
+      image_url,
+      image_urls: image_urls || [],
+      category,
+      stock_quantity: Number.parseInt(stock_quantity) || 0,
+      is_featured: Boolean(is_featured),
+      sizes: sizes || [],
+      colors: colors || [],
+      designs: designs || []
+    }
+
+    console.log('Creating product with data:', productData) // Debug log
+
     const { data: product, error } = await supabase
       .from("products")
-      .insert({
-        name,
-        description,
-        price: Number.parseFloat(price),
-        image_url,
-        category,
-        stock_quantity: Number.parseInt(stock_quantity) || 0,
-        is_featured: Boolean(is_featured),
-      })
+      .insert(productData)
       .select()
       .single()
 

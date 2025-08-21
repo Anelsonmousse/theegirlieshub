@@ -5,7 +5,19 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   try {
     const { id } = params
     const body = await request.json()
-    const { name, description, price, image_url, category, stock_quantity, is_featured } = body
+    const { 
+      name, 
+      description, 
+      price, 
+      image_url, 
+      image_urls,
+      category, 
+      stock_quantity, 
+      is_featured,
+      sizes,
+      colors,
+      designs
+    } = body
 
     // Validate required fields
     if (!name || !price || !category) {
@@ -14,18 +26,28 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
     const supabase = createServerClient()
 
+    // Prepare the update data with all new fields
+    const updateData = {
+      name,
+      description,
+      price: Number.parseFloat(price),
+      image_url,
+      image_urls: image_urls || [],
+      category,
+      stock_quantity: Number.parseInt(stock_quantity) || 0,
+      is_featured: Boolean(is_featured),
+      sizes: sizes || [],
+      colors: colors || [],
+      designs: designs || [],
+      updated_at: new Date().toISOString(),
+    }
+
+    console.log('Updating product with ID:', id) // Debug log
+    console.log('Update data:', updateData) // Debug log
+
     const { data: product, error } = await supabase
       .from("products")
-      .update({
-        name,
-        description,
-        price: Number.parseFloat(price),
-        image_url,
-        category,
-        stock_quantity: Number.parseInt(stock_quantity) || 0,
-        is_featured: Boolean(is_featured),
-        updated_at: new Date().toISOString(),
-      })
+      .update(updateData)
       .eq("id", id)
       .select()
       .single()

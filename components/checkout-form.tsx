@@ -121,6 +121,7 @@ export default function CheckoutForm() {
           product_id: item.product.id,
           quantity: item.quantity,
           price: item.product.price,
+          selected_variants: item.product.selectedVariants || {},
         })),
       }
 
@@ -388,6 +389,28 @@ export default function CheckoutForm() {
                 </div>
                 <div className="flex-1 space-y-1">
                   <h4 className="font-medium text-sm line-clamp-2">{item.product.name}</h4>
+                  
+                  {/* Display selected variants */}
+                  {item.product.selectedVariants && (
+                    <div className="flex flex-wrap gap-1 mb-1">
+                      {item.product.selectedVariants.size && (
+                        <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                          {item.product.selectedVariants.size}
+                        </span>
+                      )}
+                      {item.product.selectedVariants.color && (
+                        <span className="text-xs bg-accent/10 text-accent px-2 py-1 rounded">
+                          {item.product.selectedVariants.color}
+                        </span>
+                      )}
+                      {item.product.selectedVariants.design && (
+                        <span className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">
+                          {item.product.selectedVariants.design}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                  
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-muted-foreground">Qty: {item.quantity}</span>
                     <span className="font-semibold text-primary">

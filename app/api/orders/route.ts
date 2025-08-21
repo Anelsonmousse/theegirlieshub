@@ -52,13 +52,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Failed to create order" }, { status: 500 })
     }
 
-    // Create order items
+    // Create order items with selected variants
     const orderItems = items.map((item: any) => ({
       order_id: order.id,
       product_id: item.product_id,
       quantity: item.quantity,
       price: item.price,
+      selected_variants: item.selected_variants || {}, // Add selected variants
     }))
+
+    console.log('Creating order items with variants:', orderItems) // Debug log
 
     const { error: itemsError } = await supabase.from("order_items").insert(orderItems)
 
